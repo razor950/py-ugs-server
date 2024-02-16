@@ -17,7 +17,7 @@ g_buildResultString = [
 ]
 
 class BuildData(result_data.ResultData):
-	def __init__(self, _Id, _ChangeNumber, _BuildType, _Result, _Url, _Project, _ArchivePath):
+	def __init__(self, _Id, _ChangeNumber, _BuildType, _Result, _Url, _Project, _ArchivePath, _BuildMetaData):
 		super(BuildData,self).__init__()
 		
 		self.Id = _Id
@@ -27,6 +27,7 @@ class BuildData(result_data.ResultData):
 		self.Url = _Url
 		self.Project = _Project
 		self.ArchivePath = _ArchivePath
+		self.BuildMetaData = _BuildMetaData
 		
 def getResultString(intResult):
 	if(intResult>=0 and intResult<len(g_buildResultString)):

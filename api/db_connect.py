@@ -23,13 +23,13 @@ class DbConnectPool():
 			self._pool = PooledDB(
 				creator=pymysql, 
 				host=db_config.DB_UGS_HOST, port=db_config.DB_UGS_PORT, user=db_config.DB_UGS_USERNAME, password=db_config.DB_UGS_PASSWORD, db=db_config.DB_UGS_DBNAME, charset=db_config.DB_UGS_CHARSET,
-				blocking=True, #设置在连接池达到最大数量时的行为(缺省值 0 或 False 代表返回一个错误<toMany......>; 其他代表阻塞直到连接数减少,连接被分配
-				mincached=10, #启动时开启的闲置连接数量(缺省值 0 以为着开始时不创建连接)
-				maxcached=10, #连接池中允许的闲置的最多连接数量(缺省值 0 代表不闲置连接池大小)
-				maxshared=30, #共享连接数允许的最大数量(缺省值 0 代表所有连接都是专用的)如果达到了最大数量,被请求为共享的连接将会被共享使用
-				maxconnections=100, #创建连接池的最大数量(缺省值 0 代表不限制)
-				maxusage=0, #单个连接的最大允许复用次数(缺省值 0 或 False 代表不限制的复用).当达到最大数时,连接会自动重新连接(关闭和重新打开)
-				setsession=None #一个可选的SQL命令列表用于准备每个会话，如["set datestyle to german", ...]
+				blocking=True, 
+				mincached=10, 
+				maxcached=10,
+				maxshared=30, 
+				maxconnections=100, 
+				maxusage=0, 
+				setsession=None
 			)
 		except Exception as why:
 			print("Create PooledDB error:{0}".format(why))

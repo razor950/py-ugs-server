@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS ugs_db.Badges (
 	Url NVARCHAR(512) NOT NULL,
 	ProjectId INT NOT NULL,
 	ArchivePath NVARCHAR(512) NULL,
+    Metadata TEXT NULL,
 	PRIMARY KEY ( Id ),
 	FOREIGN KEY(ProjectId) REFERENCES Projects(Id)
 );
