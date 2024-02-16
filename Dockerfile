@@ -1,7 +1,7 @@
 #
 # Unreal Game Sync Server(Python Version) Docker file
 #
-FROM python:3.9
+FROM python:3
 
 # Install python modules
 RUN python -m pip install --upgrade pip
