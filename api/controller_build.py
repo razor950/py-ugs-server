@@ -19,7 +19,7 @@ class BuildController:
 			if(Result):
 				Url = build[4]
 				Project= build[5] if (len(build)>5) else None
-				
+
 				# if metadata doesn't exist, check if it can be loaded to be appended. If it can't, it's set to None
 				if Metadata == None:
 						try:
@@ -27,7 +27,7 @@ class BuildController:
 						except json.JSONDecodeError:
 								pass 
 				if(Project==None or Project.lower()==project.lower() or db_connect.matchesWildcard(Project, project)):
-					result.append(model_build.BuildData(Id, ChangeNumber, BuildType, Result, Url, Project, None))
+					result.append(model_build.BuildData(Id, ChangeNumber, BuildType, Result, Url, Project, Metadata))
 		return result
 	
 	def PostBuild(buildData):
