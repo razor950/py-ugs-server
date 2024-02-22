@@ -3,18 +3,15 @@
 from dbutils.pooled_db  import PooledDB
 import pymysql
 from pymysql import OperationalError, InternalError, ProgrammingError
+import os
 
-import db_config
-
-#db_config.py looks like:
-'''
-DB_UGS_HOST="127.0.0.1"
-DB_UGS_PORT=3306
-DB_UGS_DBNAME="ugs_db"
-DB_UGS_USERNAME="root"
-DB_UGS_PASSWORD="*******"
-DB_UGS_CHARSET="utf8"
-'''
+# Reading database configuration from environment variables
+DB_HOST = os.getenv('DB_UGS_HOST')
+DB_PORT = os.getenv('DB_UGS_PORT')
+DB_USERNAME = os.getenv('DB_UGS_USERNAME')
+DB_PASSWORD = os.getenv('DB_UGS_PASSWORD')
+DB_NAME = os.getenv('DB_UGS_DBNAME')
+DB_CHARSET = os.getenv('DB_UGS_CHARSET')
 
 class DbConnectPool():
 	def __init__(self):
@@ -22,7 +19,12 @@ class DbConnectPool():
 			print("DbConnectPool Construct!")
 			self._pool = PooledDB(
 				creator=pymysql, 
-				host=db_config.DB_UGS_HOST, port=db_config.DB_UGS_PORT, user=db_config.DB_UGS_USERNAME, password=db_config.DB_UGS_PASSWORD, db=db_config.DB_UGS_DBNAME, charset=db_config.DB_UGS_CHARSET,
+				host = DB_HOST,
+				port = DB_PORT if DB_PORT is not None else 3306,
+				user = DB_USERNAME,
+				password = DB_PASSWORD,
+				db = DB_NAME,
+				charset = DB_CHARSET if DB_CHARSET is not None else 'utf8mb4', 
 				blocking=True, 
 				mincached=10, 
 				maxcached=10,
