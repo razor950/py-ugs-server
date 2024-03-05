@@ -15,6 +15,7 @@ DB_CHARSET = os.getenv('DB_UGS_CHARSET')
 
 class DbConnectPool():
 	def __init__(self):
+		print("DbConnectPool __init__")
 		self._pool = None
 		try:
 			print("DbConnectPool Construct!")
@@ -43,7 +44,10 @@ class DbConnectPool():
 		else:
 			raise Exception("Connection pool is not available.")
 
-g_dbManager = DbConnectPool()
+try:
+	g_dbManager = DbConnectPool()
+except Exception as why:
+	print("Create DbConnectPool error:{0}".format(why))
 
 def fetchOneValue(sql, index, defValue):
 	with g_dbManager._getConn() as db:
