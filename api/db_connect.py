@@ -15,6 +15,7 @@ DB_CHARSET = os.getenv('DB_UGS_CHARSET')
 
 class DbConnectPool():
 	def __init__(self):
+		self._pool = None
 		try:
 			print("DbConnectPool Construct!")
 			self._pool = PooledDB(
@@ -37,7 +38,10 @@ class DbConnectPool():
 			print("Create PooledDB error:{0}".format(why))
 	
 	def _getConn(self):
-		return self._pool.connection()
+		if self._pool:
+			return self._pool.connection()
+		else:
+			raise Exception("Connection pool is not available.")
 
 g_dbManager = DbConnectPool()
 
