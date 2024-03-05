@@ -13,6 +13,28 @@ DB_PASSWORD = os.getenv('DB_UGS_PASSWORD')
 DB_NAME = os.getenv('DB_UGS_DBNAME')
 DB_CHARSET = os.getenv('DB_UGS_CHARSET')
 
+# Ensuring all required environment variables are set
+required_env_vars = {
+    'DB_UGS_HOST': DB_HOST,
+    'DB_UGS_PORT': DB_PORT,
+    'DB_UGS_USERNAME': DB_USERNAME,
+    'DB_UGS_PASSWORD': DB_PASSWORD,
+    'DB_UGS_DBNAME': DB_NAME,
+}
+
+for var_name, var_value in required_env_vars.items():
+    if var_value is None:
+        raise ValueError(f"Required environment variable {var_name} is not set.")
+
+# Convert port to integer, default to 3306 if not set
+try:
+    DB_PORT = int(DB_PORT) if DB_PORT is not None else 3306
+except ValueError:
+    raise ValueError("DB_UGS_PORT environment variable must be a valid integer.")
+
+# Setting default charset if not specified
+DB_CHARSET = DB_CHARSET if DB_CHARSET is not None else 'utf8mb4'
+
 class DbConnectPool():
 	def __init__(self):
 		print("DbConnectPool __init__")
@@ -22,11 +44,11 @@ class DbConnectPool():
 			self._pool = PooledDB(
 				creator=pymysql, 
 				host = DB_HOST,
-				port = DB_PORT if DB_PORT is not None else 3306,
+				port = DB_PORT,
 				user = DB_USERNAME,
 				password = DB_PASSWORD,
 				db = DB_NAME,
-				charset = DB_CHARSET if DB_CHARSET is not None else 'utf8mb4', 
+				charset = DB_CHARSET, 
 				blocking=True, 
 				mincached=10, 
 				maxcached=10,
